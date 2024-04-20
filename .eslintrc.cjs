@@ -36,7 +36,9 @@ const config = {
           "attributes": false
         }
       }
-    ]
+    ],
+    "@typescript-eslint/no-implicit-any": "off",
+    "@typescript-eslint/no-unsafe-return": "off"
   }
 }
 module.exports = config;

@@ -8,7 +8,7 @@ export interface CacheConfig {
 	expires?: number;
 }
 
-export const GetCacheClient = async (options: CacheConfig): Promise<RedisClientType | undefined> => {
+export const GetCacheClient = async (options: CacheConfig): Promise<RedisClientType> => {
 	const { url, mode } = options;
 	// @ts-ignore
 	return await getClient(url, mode);

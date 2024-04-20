@@ -60,8 +60,5 @@ export const NewEventClient = async (): Promise< SystemEvent| null> => {
         url: env.EVENT_REDIS_URI ?? "",
         mode: env.EVENT_REDIS_MODE,
     })
-    if(!cli){
-        return null;
-    }
     return new SystemEvent(cli);
 }
