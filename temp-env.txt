@@ -1,0 +1,11 @@
+# Database
+DATABASE_URL="file:./db.sqlite"
+
+# Next Auth
+# You can generate a new secret with: openssl rand -base64 32
+NEXTAUTH_SECRET="temporary_secret_replace_in_production"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Next Auth Discord Provider (replace with actual values when available)
+DISCORD_CLIENT_ID="temp_discord_id"
+DISCORD_CLIENT_SECRET="temp_discord_secret"

@@ -52,7 +52,7 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
     <Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
-          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
+          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)} color='inherit'>
             {open ? <ChevronUp /> : <ChevronDown />}
           </IconButton>
         </TableCell>

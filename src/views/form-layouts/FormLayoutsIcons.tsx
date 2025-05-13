@@ -20,7 +20,7 @@ const FormLayoutsIcons = () => {
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 label='Full Name'
@@ -34,7 +34,7 @@ const FormLayoutsIcons = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 type='email'
@@ -50,7 +50,7 @@ const FormLayoutsIcons = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 type='number'
@@ -65,7 +65,7 @@ const FormLayoutsIcons = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 multiline
@@ -82,7 +82,7 @@ const FormLayoutsIcons = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Button type='submit' variant='contained' size='large'>
                 Submit
               </Button>
@@ -91,7 +91,7 @@ const FormLayoutsIcons = () => {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default FormLayoutsIcons

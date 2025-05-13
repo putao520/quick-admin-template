@@ -63,10 +63,10 @@ const FormLayoutsBasic = () => {
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField fullWidth label='Name' placeholder='Leonard Carter' />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 fullWidth
                 type='email'
@@ -75,7 +75,7 @@ const FormLayoutsBasic = () => {
                 helperText='You can use letters, numbers & periods'
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-basic-password'>Password</InputLabel>
                 <OutlinedInput
@@ -89,9 +89,9 @@ const FormLayoutsBasic = () => {
                     <InputAdornment position='end'>
                       <IconButton
                         edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+                        onClick={() => setValues({ ...values, showPassword: !values.showPassword })}
                         aria-label='toggle password visibility'
+                        color='inherit'
                       >
                         {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
@@ -103,7 +103,7 @@ const FormLayoutsBasic = () => {
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-confirm-password'>Confirm Password</InputLabel>
                 <OutlinedInput
@@ -120,6 +120,7 @@ const FormLayoutsBasic = () => {
                         onClick={handleClickConfirmPassShow}
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
+                        color='inherit'
                       >
                         {confirmPassValues.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
@@ -131,7 +132,7 @@ const FormLayoutsBasic = () => {
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Box
                 sx={{
                   gap: 5,
@@ -156,7 +157,7 @@ const FormLayoutsBasic = () => {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default FormLayoutsBasic

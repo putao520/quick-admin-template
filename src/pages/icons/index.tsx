@@ -118,7 +118,7 @@ const Icons = () => {
       const IconTag = icons[key as keyof typeof icons]
 
       return (
-        <Grid item key={key}>
+        <Grid key={key}>
           <Tooltip arrow title={key} placement='top'>
             <Card>
               <CardContent sx={{ display: 'flex' }}>
@@ -127,13 +127,13 @@ const Icons = () => {
             </Card>
           </Tooltip>
         </Grid>
-      )
-    })
+      );
+    });
   }
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography variant='h5'>
           <Link href='https://materialdesignicons.com/' target='_blank'>
             Material Design Icons
@@ -141,12 +141,12 @@ const Icons = () => {
         </Typography>
         <Typography variant='body2'>Material Design Icons from the Community</Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Grid container spacing={6}>
           {renderIconGrids()}
         </Grid>
       </Grid>
-      <Grid item xs={12} sx={{ textAlign: 'center' }}>
+      <Grid sx={{ textAlign: 'center' }} size={12}>
         <Button
           target='_blank'
           rel='noreferrer'
@@ -158,7 +158,7 @@ const Icons = () => {
         </Button>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 export default Icons

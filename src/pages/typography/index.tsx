@@ -8,14 +8,14 @@ import TypographyHeadings from 'src/views/typography/TypographyHeadings'
 const TypographyPage = () => {
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <TypographyHeadings />
       </Grid>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <TypographyTexts />
       </Grid>
     </Grid>
-  )
+  );
 }
 
 export default TypographyPage

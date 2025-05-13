@@ -25,7 +25,11 @@ const CardMembership = () => {
   return (
     <Card>
       <Grid container spacing={6}>
-        <Grid item xs={12} sm={7}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 7
+          }}>
           <CardContent sx={{ padding: theme => `${theme.spacing(3.25, 5.75, 6.25)} !important` }}>
             <Typography variant='h6' sx={{ marginBottom: 3.5 }}>
               Lifetime Membership
@@ -38,7 +42,11 @@ const CardMembership = () => {
             </Typography>
             <Divider sx={{ marginTop: 6.5, marginBottom: 6.75 }} />
             <Grid container spacing={4}>
-              <Grid item xs={12} sm={5}>
+              <Grid
+                size={{
+                  xs: 12,
+                  sm: 5
+                }}>
                 <StyledBox>
                   <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
                     <LockOpenOutline sx={{ color: 'primary.main', marginRight: 2.75 }} fontSize='small' />
@@ -50,7 +58,11 @@ const CardMembership = () => {
                   </Box>
                 </StyledBox>
               </Grid>
-              <Grid item xs={12} sm={7}>
+              <Grid
+                size={{
+                  xs: 12,
+                  sm: 7
+                }}>
                 <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
                   <StarOutline sx={{ color: 'primary.main', marginRight: 2.75 }} fontSize='small' />
                   <Typography variant='body2'>Access all Features</Typography>
@@ -64,11 +76,11 @@ const CardMembership = () => {
           </CardContent>
         </Grid>
         <Grid
-          item
-          sm={5}
-          xs={12}
           sx={{ paddingTop: ['0 !important', '1.5rem !important'], paddingLeft: ['1.5rem !important', '0 !important'] }}
-        >
+          size={{
+            sm: 5,
+            xs: 12
+          }}>
           <CardContent
             sx={{
               height: '100%',
@@ -98,7 +110,7 @@ const CardMembership = () => {
         </Grid>
       </Grid>
     </Card>
-  )
+  );
 }
 
 export default CardMembership

@@ -6,6 +6,6 @@ const globalForPersistent = globalThis as unknown as{
     handle: RedisClientType | undefined;
 }
 
-export const persistent = globalForPersistent.handle ?? await GetDataCacheClient();
+export const persistent = globalForPersistent.handle ?? (await GetDataCacheClient());
 
 if (env.NODE_ENV !== "production") globalForPersistent.handle = persistent;

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, type ElementType, type ChangeEvent, type SyntheticEvent } from 'react'
+import { useState, useCallback, useMemo, useTransition, type ElementType, type ChangeEvent, type SyntheticEvent } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -50,21 +50,34 @@ const TabAccount = () => {
   const [openAlert, setOpenAlert] = useState<boolean>(true)
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
 
-  const onChange = (file: ChangeEvent) => {
-    const reader = new FileReader()
-    const { files } = file.target as HTMLInputElement
-    if (files && files.length !== 0) {
-      reader.onload = () => setImgSrc(reader.result as string)
+  // 使用 useTransition 处理图片加载，避免阻塞 UI
+  const [isPending, startTransition] = useTransition()
 
-      reader.readAsDataURL(files[0])
+  // 使用 useCallback 缓存文件上传回调函数
+  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader()
+    const files = event.target.files
+    // 确保文件存在并且有效
+    if (files && files.length > 0) {
+      const file = files[0]
+      if (file) {
+        reader.onload = () => {
+          // 使用 startTransition 处理图片加载，使界面保持响应
+          startTransition(() => {
+            setImgSrc(reader.result as string)
+          })
+        }
+
+        reader.readAsDataURL(file)
+      }
     }
-  }
+  }, [startTransition])
 
   return (
     <CardContent>
       <form>
         <Grid container spacing={7}>
-          <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
+          <Grid sx={{ marginTop: 4.8, marginBottom: 3 }} size={12}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <ImgStyled src={imgSrc} alt='Profile Pic' />
               <Box>
@@ -78,7 +91,15 @@ const TabAccount = () => {
                     id='account-settings-upload-image'
                   />
                 </ButtonStyled>
-                <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc('/images/avatars/1.png')}>
+                <ResetButtonStyled 
+                  color='error' 
+                  variant='outlined' 
+                  disabled={isPending}
+                  onClick={useCallback(() => {
+                    startTransition(() => {
+                      setImgSrc('/images/avatars/1.png')
+                    })
+                  }, [startTransition])}>
                   Reset
                 </ResetButtonStyled>
                 <Typography variant='body2' sx={{ marginTop: 5 }}>
@@ -88,13 +109,25 @@ const TabAccount = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <TextField
               fullWidth
               type='email'
@@ -103,7 +136,11 @@ const TabAccount = () => {
               defaultValue='johnDoe@example.com'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <FormControl fullWidth>
               <InputLabel>Role</InputLabel>
               <Select label='Role' defaultValue='admin'>
@@ -115,7 +152,11 @@ const TabAccount = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select label='Status' defaultValue='active'>
@@ -125,12 +166,16 @@ const TabAccount = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
           </Grid>
 
           {openAlert ? (
-            <Grid item xs={12} sx={{ mb: 3 }}>
+            <Grid sx={{ mb: 3 }} size={12}>
               <Alert
                 severity='warning'
                 sx={{ '& a': { fontWeight: 400 } }}
@@ -148,7 +193,7 @@ const TabAccount = () => {
             </Grid>
           ) : null}
 
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
               Save Changes
             </Button>
@@ -159,7 +204,7 @@ const TabAccount = () => {
         </Grid>
       </form>
     </CardContent>
-  )
+  );
 }
 
 export default TabAccount

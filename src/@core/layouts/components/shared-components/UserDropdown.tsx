@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, type SyntheticEvent, Fragment } from 'react'
+import { useState, type SyntheticEvent, useCallback, useMemo } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -39,18 +39,20 @@ const UserDropdown = () => {
   // ** Hooks
   const router = useRouter()
 
-  const handleDropdownOpen = (event: SyntheticEvent) => {
+  // 使用 useCallback 缓存回调函数，避免不必要的重新创建
+  const handleDropdownOpen = useCallback((event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget)
-  }
+  }, [])
 
-  const handleDropdownClose = (url?: string) => {
+  const handleDropdownClose = useCallback((url?: string) => {
     if (url) {
       router.push(url)
     }
     setAnchorEl(null)
-  }
+  }, [router])
 
-  const styles = {
+  // 使用 useMemo 缓存样式对象，避免在每次渲染时重新创建
+  const styles = useMemo(() => ({
     py: 2,
     px: 4,
     width: '100%',
@@ -62,10 +64,10 @@ const UserDropdown = () => {
       fontSize: '1.375rem',
       color: 'text.secondary'
     }
-  }
+  }), [])
 
   return (
-    <Fragment>
+    <>
       <Badge
         overlap='circular'
         onClick={handleDropdownOpen}
@@ -149,7 +151,7 @@ const UserDropdown = () => {
           Logout
         </MenuItem>
       </Menu>
-    </Fragment>
+    </>
   )
 }
 

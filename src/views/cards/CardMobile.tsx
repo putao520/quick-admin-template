@@ -57,14 +57,14 @@ const CardMobile = () => {
           </CardContent>
         </StyledGrid>
         <Grid
-          item
-          xs={12}
-          md={7}
           sx={{
             paddingTop: ['0 !important', '0 !important', '1.5rem !important'],
             paddingLeft: ['1.5rem !important', '1.5rem !important', '0 !important']
           }}
-        >
+          size={{
+            xs: 12,
+            md: 7
+          }}>
           <CardContent>
             <Typography variant='h6' sx={{ marginBottom: 2 }}>
               Apple iPhone 11 Pro
@@ -92,6 +92,7 @@ const CardMobile = () => {
                 onClick={handleClick}
                 aria-controls='long-menu'
                 aria-expanded={open ? 'true' : undefined}
+                color='inherit'
               >
                 <ShareVariant fontSize='small' />
               </IconButton>
@@ -122,7 +123,7 @@ const CardMobile = () => {
         </Grid>
       </Grid>
     </Card>
-  )
+  );
 }
 
 export default CardMobile

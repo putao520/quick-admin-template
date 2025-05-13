@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import Grid, { type GridProps } from '@mui/material/Grid'
+import Grid, { type GridLegacyProps as GridProps } from '@mui/material/GridLegacy'
 
 const DemoGrid = styled(Grid)<GridProps>(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {

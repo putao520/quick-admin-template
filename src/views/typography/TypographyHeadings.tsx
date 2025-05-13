@@ -18,7 +18,12 @@ const TypographyHeadings = () => {
       <CardHeader title='Headings' titleTypographyProps={{ variant: 'h6' }} />
       <CardContent>
         <Grid container spacing={6}>
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H1</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -28,7 +33,12 @@ const TypographyHeadings = () => {
             <Typography variant='body2'>font-size: 96px / line-height: 112px / font-weight: 500</Typography>
           </DemoGrid>
 
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H2</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -38,7 +48,12 @@ const TypographyHeadings = () => {
             <Typography variant='body2'>font-size: 60px / line-height: 72px / font-weight: 500</Typography>
           </DemoGrid>
 
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H3</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -48,7 +63,12 @@ const TypographyHeadings = () => {
             <Typography variant='body2'>font-size: 48px / line-height: 56px / font-weight: 500</Typography>
           </DemoGrid>
 
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H4</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -58,7 +78,12 @@ const TypographyHeadings = () => {
             <Typography variant='body2'>font-size: 32px / line-height: 40px / font-weight: 500</Typography>
           </DemoGrid>
 
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H5</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -68,7 +93,12 @@ const TypographyHeadings = () => {
             <Typography variant='body2'>font-size: 24px / line-height: 32px / font-weight: 500</Typography>
           </DemoGrid>
 
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            size={{
+              xs: 12,
+              sm: 2
+            }}>
             <Typography>H6</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
@@ -80,7 +110,7 @@ const TypographyHeadings = () => {
         </Grid>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default TypographyHeadings

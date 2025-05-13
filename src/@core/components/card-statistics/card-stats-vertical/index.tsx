@@ -14,7 +14,15 @@ import { type CardStatsVerticalProps } from 'src/@core/components/card-statistic
 
 const CardStatsVertical = (props: CardStatsVerticalProps) => {
   // ** Props
-  const { title, subtitle, color, icon, stats, trend, trendNumber } = props
+  const { 
+    title, 
+    subtitle, 
+    color = 'primary', 
+    icon, 
+    stats, 
+    trend = 'positive', 
+    trendNumber 
+  } = props
 
   return (
     <Card>
@@ -23,7 +31,7 @@ const CardStatsVertical = (props: CardStatsVerticalProps) => {
           <Avatar sx={{ boxShadow: 3, marginRight: 4, color: 'common.white', backgroundColor: `${color}.main` }}>
             {icon}
           </Avatar>
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
+          <IconButton size='small' aria-label='settings' className='card-more-options' color='inherit'>
             <DotsVertical />
           </IconButton>
         </Box>
@@ -47,8 +55,3 @@ const CardStatsVertical = (props: CardStatsVerticalProps) => {
 }
 
 export default CardStatsVertical
-
-CardStatsVertical.defaultProps = {
-  color: 'primary',
-  trend: 'positive'
-}

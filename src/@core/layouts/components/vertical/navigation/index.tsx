@@ -71,14 +71,21 @@ const Navigation = (props: Props) => {
 
   // ** Fixes Navigation InfiniteScroll
   const handleInfiniteScroll = (ref: HTMLElement) => {
-    if (ref) {
-      // @ts-ignore
-      ref._getBoundingClientRect = ref.getBoundingClientRect
+    if (ref && !Object.prototype.hasOwnProperty.call(ref, '_getBoundingClientRect')) {
+      // 保存原始的 getBoundingClientRect 方法
+      const originalMethod = ref.getBoundingClientRect
+      
+      // 添加自定义属性
+      // @ts-ignore - 添加自定义属性到 HTMLElement
+      ref._getBoundingClientRect = originalMethod
 
-      ref.getBoundingClientRect = () => {
-        // @ts-ignore
-        const original = ref._getBoundingClientRect()
-
+      // 重写 getBoundingClientRect 方法
+      ref.getBoundingClientRect = function() {
+        // 调用原始方法
+        // @ts-ignore - 使用自定义属性
+        const original = this._getBoundingClientRect.call(this)
+        
+        // 返回修改后的结果
         return { ...original, height: Math.floor(original.height) }
       }
     }
