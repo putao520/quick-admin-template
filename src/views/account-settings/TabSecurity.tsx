@@ -78,9 +78,13 @@ const TabSecurity = () => {
     <form>
       <CardContent sx={{ paddingBottom: 0 }}>
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6
+            }}>
             <Grid container spacing={5}>
-              <Grid item xs={12} sx={{ marginTop: 4.75 }}>
+              <Grid sx={{ marginTop: 4.75 }} size={12}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-current-password'>Current Password</InputLabel>
                   <OutlinedInput
@@ -96,6 +100,7 @@ const TabSecurity = () => {
                           aria-label='toggle password visibility'
                           onClick={handleClickShowCurrentPassword}
                           onMouseDown={handleMouseDownCurrentPassword}
+                          color='inherit'
                         >
                           {values.showCurrentPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -105,7 +110,7 @@ const TabSecurity = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sx={{ marginTop: 6 }}>
+              <Grid sx={{ marginTop: 6 }} size={12}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-new-password'>New Password</InputLabel>
                   <OutlinedInput
@@ -121,6 +126,7 @@ const TabSecurity = () => {
                           onClick={handleClickShowNewPassword}
                           aria-label='toggle password visibility'
                           onMouseDown={handleMouseDownNewPassword}
+                          color='inherit'
                         >
                           {values.showNewPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -130,7 +136,7 @@ const TabSecurity = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-confirm-new-password'>Confirm New Password</InputLabel>
                   <OutlinedInput
@@ -146,6 +152,7 @@ const TabSecurity = () => {
                           aria-label='toggle password visibility'
                           onClick={handleClickShowConfirmNewPassword}
                           onMouseDown={handleMouseDownConfirmNewPassword}
+                          color='inherit'
                         >
                           {values.showConfirmNewPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -158,18 +165,16 @@ const TabSecurity = () => {
           </Grid>
 
           <Grid
-            item
-            sm={6}
-            xs={12}
             sx={{ display: 'flex', marginTop: [7.5, 2.5], alignItems: 'center', justifyContent: 'center' }}
-          >
+            size={{
+              sm: 6,
+              xs: 12
+            }}>
             <img width={183} alt='avatar' height={256} src='/images/pages/pose-m-1.png' />
           </Grid>
         </Grid>
       </CardContent>
-
       <Divider sx={{ margin: 0 }} />
-
       <CardContent>
         <Box sx={{ mt: 1.75, display: 'flex', alignItems: 'center' }}>
           <KeyOutline sx={{ marginRight: 3 }} />
@@ -217,6 +222,6 @@ const TabSecurity = () => {
         </Box>
       </CardContent>
     </form>
-  )
+  );
 }
 export default TabSecurity

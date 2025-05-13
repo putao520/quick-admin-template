@@ -39,7 +39,20 @@ const ThemeComponent = (props: Props) => {
 
   // ** Continue theme creation and pass merged component overrides to CreateTheme function
   theme = createTheme(theme, {
-    components: { ...overrides(theme) },
+    components: { 
+      ...overrides(theme),
+      // 为 IconButton 添加默认属性，解决 MUI v7 兼容性问题
+      MuiIconButton: {
+        defaultProps: {
+          color: 'inherit'
+        },
+        styleOverrides: {
+          root: {
+            color: theme.palette.text.secondary
+          }
+        }
+      } 
+    },
     typography: { ...typography(theme) }
   })
 

@@ -185,6 +185,7 @@ const LoginPage = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
+                      color='inherit'
                     >
                       {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                     </IconButton>
@@ -222,24 +223,24 @@ const LoginPage = () => {
             <Divider sx={{ my: 5 }}>or</Divider>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()} color='inherit'>
                   <Facebook sx={{ color: '#497ce2' }} />
                 </IconButton>
               </Link>
               <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()} color='inherit'>
                   <Twitter sx={{ color: '#1da1f2' }} />
                 </IconButton>
               </Link>
               <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()} color='inherit'>
                   <Github
                     sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : theme.palette.grey[300]) }}
                   />
                 </IconButton>
               </Link>
               <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()} color='inherit'>
                   <Google sx={{ color: '#db4437' }} />
                 </IconButton>
               </Link>

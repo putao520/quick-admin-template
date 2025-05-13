@@ -1,5 +1,5 @@
 // ** React Imports
-import { type ElementType, type ReactNode } from 'react'
+import { type ElementType, type ReactNode, useCallback, useMemo } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -74,22 +74,22 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
 
   const IconTag: ReactNode = item.icon
 
-  const isNavLinkActive = () => {
+  // 使用 useCallback 缓存路由活动状态计算函数
+  const isNavLinkActive = useCallback(() => {
     return router.pathname === item.path || handleURLQueries(router, item.path);
-  }
+  }, [router.pathname, item.path])
 
   return (
     <ListItem
       disablePadding
       className='nav-link'
-      disabled={item.disabled ?? false}
       sx={{ mt: 1.5, px: '0 !important' }}
     >
       <StyledLink passHref href={item.path === undefined ? '/' : `${item.path}`}>
         <MenuNavLink
           className={isNavLinkActive() ? 'active' : ''}
           {...(item.openInNewTab ? { target: '_blank' } : null)}
-          onClick={e => {
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
             if (item.path === undefined) {
               e.preventDefault()
               e.stopPropagation()

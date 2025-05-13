@@ -1,3 +1,6 @@
+// ** React Imports
+import React, { useMemo } from 'react'
+
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 
@@ -23,24 +26,48 @@ import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 
 const Dashboard = () => {
-  return (
+  // 使用 useMemo 缓存仪表盘布局，避免不必要的重新渲染
+  const dashboardContent = useMemo(() => (
     <ApexChartWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 4
+          }}>
           <Trophy />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 8
+          }}>
           <StatisticsCard />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 6,
+            lg: 4
+          }}>
           <WeeklyOverview />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 6,
+            lg: 4
+          }}>
           <TotalEarning />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 6,
+            lg: 4
+          }}>
           <Grid container spacing={6}>
-            <Grid item xs={6}>
+            <Grid size={6}>
               <CardStatisticsVerticalComponent
                 stats='$25.6k'
                 icon={<Poll />}
@@ -50,7 +77,7 @@ const Dashboard = () => {
                 subtitle='Weekly Profit'
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={6}>
               <CardStatisticsVerticalComponent
                 stats='$78'
                 title='Refunds'
@@ -61,7 +88,7 @@ const Dashboard = () => {
                 icon={<CurrencyUsd />}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={6}>
               <CardStatisticsVerticalComponent
                 stats='862'
                 trend='negative'
@@ -71,7 +98,7 @@ const Dashboard = () => {
                 icon={<BriefcaseVariantOutline />}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={6}>
               <CardStatisticsVerticalComponent
                 stats='15'
                 color='warning'
@@ -84,18 +111,31 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 6,
+            lg: 4
+          }}>
           <SalesByCountries />
         </Grid>
-        <Grid item xs={12} md={12} lg={8}>
+        <Grid
+          size={{
+            xs: 12,
+            md: 12,
+            lg: 8
+          }}>
           <DepositWithdraw />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Table />
         </Grid>
       </Grid>
     </ApexChartWrapper>
-  )
+  ), [])
+
+  return dashboardContent
 }
 
-export default Dashboard
+// 使用 React.memo 包装组件，避免不必要的重新渲染
+export default React.memo(Dashboard)

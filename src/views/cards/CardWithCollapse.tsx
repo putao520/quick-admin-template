@@ -46,8 +46,12 @@ const CardWithCollapse = () => {
           }}
         >
           <Button onClick={handleClick}>Details</Button>
-          <IconButton size='small' onClick={handleClick}>
-            {collapse ? <ChevronUp sx={{ fontSize: '1.875rem' }} /> : <ChevronDown sx={{ fontSize: '1.875rem' }} />}
+          <IconButton 
+            size='small' 
+            onClick={handleClick}
+            color='inherit'
+          >
+            {collapse ? <ChevronUp /> : <ChevronDown />}
           </IconButton>
         </Box>
       </CardActions>

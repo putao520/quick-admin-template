@@ -15,14 +15,16 @@ const config = {
     defaultLocale: "zh-cn",
   },
   images: {
-	loader: 'custom',
-      loaderFile: './src/types/image/loader.ts',
-	remotePatterns: [
-		{
-			protocol: 'https',
-			hostname: '**',
-		},
-	],
+    loader: 'custom',
+    loaderFile: './src/types/image/loader.ts',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
+  // 确保 Pages Router 继续工作
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
 };
 export default config;

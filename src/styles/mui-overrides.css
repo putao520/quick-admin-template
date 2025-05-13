@@ -1,0 +1,4 @@
+/* 全局覆盖 MUI IconButton 样式，解决 MUI v7 兼容性问题 */
+.MuiIconButton-root {
+  color: inherit !important;
+}

@@ -89,7 +89,12 @@ const SalesByCountries = () => {
         title='Sales by Countries'
         titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
         action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
+          <IconButton 
+            size='small' 
+            aria-label='settings' 
+            className='card-more-options' 
+            color='inherit'
+          >
             <DotsVertical />
           </IconButton>
         }

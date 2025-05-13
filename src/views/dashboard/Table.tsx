@@ -1,3 +1,6 @@
+// ** React Imports
+import React, { useMemo, useDeferredValue, memo } from 'react'
+
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -27,7 +30,8 @@ type StatusObj = Record<string, {
     color: ThemeColor
   }>;
 
-const rows: RowType[] = [
+// 定义表格数据
+const tableData: RowType[] = [
   {
     age: 27,
     status: 'current',
@@ -102,7 +106,8 @@ const rows: RowType[] = [
   }
 ]
 
-const statusObj: StatusObj = {
+// 定义状态样式映射
+const statusStyles: StatusObj = {
   applied: { color: 'info' },
   rejected: { color: 'error' },
   current: { color: 'primary' },
@@ -110,7 +115,42 @@ const statusObj: StatusObj = {
   professional: { color: 'success' }
 }
 
+// 使用 memo 包装 TableRow 组件，避免不必要的重新渲染
+const TableRowMemo = memo(({ row }: { row: RowType }) => (
+  <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+    <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
+        <Typography variant='caption'>{row.designation}</Typography>
+      </Box>
+    </TableCell>
+    <TableCell>{row.email}</TableCell>
+    <TableCell>{row.date}</TableCell>
+    <TableCell>{row.salary}</TableCell>
+    <TableCell>{row.age}</TableCell>
+    <TableCell>
+      <Chip
+        label={row.status}
+        color={statusStyles[row.status].color}
+        sx={{
+          height: 24,
+          fontSize: '0.75rem',
+          textTransform: 'capitalize',
+          '& .MuiChip-label': { fontWeight: 500 }
+        }}
+      />
+    </TableCell>
+  </TableRow>
+));
+
+// 使用 memo 包装主组件，避免不必要的重新渲染
 const DashboardTable = () => {
+  // 使用 useMemo 缓存表格数据
+  const rows = useMemo(() => tableData, []);
+  
+  // 使用 useDeferredValue 处理大型表格数据，避免界面卡顿
+  const deferredRows = useDeferredValue(rows);
+  
   return (
     <Card>
       <TableContainer>
@@ -126,32 +166,9 @@ const DashboardTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row: RowType) => (
-              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-                <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
-                    <Typography variant='caption'>{row.designation}</Typography>
-                  </Box>
-                </TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.salary}</TableCell>
-                <TableCell>{row.age}</TableCell>
-                <TableCell>
-                  <Chip
-                    label={row.status}
-                    color={statusObj[row.status].color}
-                    sx={{
-                      height: 24,
-                      fontSize: '0.75rem',
-                      textTransform: 'capitalize',
-                      '& .MuiChip-label': { fontWeight: 500 }
-                    }}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {deferredRows?.map((row: RowType) => (
+              <TableRowMemo key={row.name} row={row} />
+            )) || null}
           </TableBody>
         </Table>
       </TableContainer>
@@ -159,4 +176,4 @@ const DashboardTable = () => {
   )
 }
 
-export default DashboardTable
+export default memo(DashboardTable)

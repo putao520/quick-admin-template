@@ -57,7 +57,12 @@ const salesData: DataType[] = [
 
 const renderStats = () => {
   return salesData.map((item: DataType, index: number) => (
-    <Grid item xs={12} sm={3} key={index}>
+    <Grid
+      key={index}
+      size={{
+        xs: 12,
+        sm: 3
+      }}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Avatar
           variant='rounded'
@@ -78,7 +83,7 @@ const renderStats = () => {
         </Box>
       </Box>
     </Grid>
-  ))
+  ));
 }
 
 const StatisticsCard = () => {
@@ -87,7 +92,12 @@ const StatisticsCard = () => {
       <CardHeader
         title='Statistics Card'
         action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
+          <IconButton 
+            size='small' 
+            aria-label='settings' 
+            className='card-more-options' 
+            color='inherit'
+          >
             <DotsVertical />
           </IconButton>
         }

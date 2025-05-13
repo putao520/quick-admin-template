@@ -59,13 +59,13 @@ const FormLayoutsAlignment = () => {
       <CardContent sx={{ minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant='h5'>Sign In</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField fullWidth label='Username' placeholder='carterLeonard' />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-alignment-password'>Password</InputLabel>
                 <OutlinedInput
@@ -81,6 +81,7 @@ const FormLayoutsAlignment = () => {
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
+                        color='inherit'
                       >
                         {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
@@ -89,14 +90,14 @@ const FormLayoutsAlignment = () => {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControlLabel
                 label='Remember me'
                 control={<Checkbox name='form-layouts-alignment-checkbox' />}
                 sx={{ '& .MuiButtonBase-root': { paddingTop: 0, paddingBottom: 0 } }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Button size='large' type='submit' variant='contained' sx={{ width: '100%' }}>
                 Login
               </Button>
@@ -105,7 +106,7 @@ const FormLayoutsAlignment = () => {
         </Form>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default FormLayoutsAlignment

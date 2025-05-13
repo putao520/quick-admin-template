@@ -2,9 +2,9 @@
 import Box from '@mui/material/Box'
 import { type Theme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
 
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'

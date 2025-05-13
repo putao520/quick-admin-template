@@ -4,8 +4,9 @@ import { type ThemeColor } from 'src/@core/layouts/types'
 
 const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
   // ** Vars
-  const lightColor = '58, 53, 65'
-  const darkColor = '231, 227, 252'
+  // MUI v7 要求使用标准的 RGB 格式
+  const lightColor = 'rgb(58, 53, 65)'
+  const darkColor = 'rgb(231, 227, 252)'
   const mainColor = mode === 'light' ? lightColor : darkColor
 
   const primaryGradient = () => {

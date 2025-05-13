@@ -62,7 +62,12 @@ const TotalEarning = () => {
         title='Total Earning'
         titleTypographyProps={{ sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' } }}
         action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
+          <IconButton 
+            size='small' 
+            aria-label='settings' 
+            className='card-more-options' 
+            color='inherit'
+          >
             <DotsVertical />
           </IconButton>
         }
