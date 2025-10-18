@@ -1,13 +1,16 @@
 // ** React Imports
-import { useMemo, useCallback } from 'react'
+import { useMemo } from 'react'
 
 // ** Types Import
-import { type Settings } from 'src/@core/context/settingsContext'
-import { type NavLink, type NavSectionTitle, type VerticalNavItemsType } from 'src/@core/layouts/types'
+import type { Settings } from 'src/@core/context/settingsContext'
+import type { NavLink, NavSectionTitle, VerticalNavItemsType } from 'src/@core/layouts/types'
 
 // ** Custom Menu Components
 import VerticalNavLink from './VerticalNavLink'
 import VerticalNavSectionTitle from './VerticalNavSectionTitle'
+
+const isNavSectionTitle = (item: NavLink | NavSectionTitle): item is NavSectionTitle =>
+  'sectionTitle' in item
 
 interface Props {
   settings: Settings
@@ -16,15 +19,9 @@ interface Props {
   currentActiveGroup: string[]
   verticalNavItems?: VerticalNavItemsType
   saveSettings: (values: Settings) => void
+  toggleNavVisibility: () => void
   setGroupActive: (value: string[]) => void
   setCurrentActiveGroup: (item: string[]) => void
-}
-
-// 使用组件外部定义函数，避免在每次渲染时重新创建
-const resolveNavItemComponent = (item: NavLink | NavSectionTitle) => {
-  if ((item as NavSectionTitle).sectionTitle) return VerticalNavSectionTitle
-
-  return VerticalNavLink
 }
 
 const VerticalNavItems = (props: Props) => {
@@ -33,10 +30,12 @@ const VerticalNavItems = (props: Props) => {
 
   // 使用 useMemo 缓存菜单项渲染结果，避免不必要的重新渲染
   const RenderMenuItems = useMemo(() => {
-    return verticalNavItems?.map((item: NavLink | NavSectionTitle, index: number) => {
-      const TagName: any = resolveNavItemComponent(item)
+    return verticalNavItems?.map((item: NavLink | NavSectionTitle) => {
+      if (isNavSectionTitle(item)) {
+        return <VerticalNavSectionTitle key={`nav-section-${item.sectionTitle}`} item={item} />
+      }
 
-      return <TagName {...props} key={index} item={item} />
+      return <VerticalNavLink key={`nav-link-${item.path ?? item.title}`} {...props} item={item} />
     })
   }, [verticalNavItems, props])
 

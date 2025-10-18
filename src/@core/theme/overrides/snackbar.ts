@@ -1,15 +1,16 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 
 const Snackbar = (theme: Theme) => {
   return {
     MuiSnackbarContent: {
       styleOverrides: {
         root: {
-          backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]
-        }
-      }
-    }
+          backgroundColor:
+            theme.palette.mode === 'light' ? theme.palette.grey[900] : theme.palette.grey[100],
+        },
+      },
+    },
   }
 }
 

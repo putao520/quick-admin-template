@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 
 const Chip = (theme: Theme) => {
   return {
@@ -7,15 +7,15 @@ const Chip = (theme: Theme) => {
       styleOverrides: {
         outlined: {
           '&.MuiChip-colorDefault': {
-            borderColor: `rgba(${theme.palette.customColors.main}, 0.22)`
-          }
+            borderColor: `rgba(${theme.palette.customColors.main}, 0.22)`,
+          },
         },
         deleteIcon: {
           width: 18,
-          height: 18
-        }
-      }
-    }
+          height: 18,
+        },
+      },
+    },
   }
 }
 

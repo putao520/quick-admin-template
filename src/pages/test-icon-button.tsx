@@ -1,19 +1,15 @@
 // ** React Imports
-import { useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Custom Components
-import CustomIconButton from 'src/@core/components/CustomIconButton'
-
+import Typography from '@mui/material/Typography'
+import Magnify from 'mdi-material-ui/Magnify'
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
-import Magnify from 'mdi-material-ui/Magnify'
+// ** Custom Components
+import CustomIconButton from 'src/@core/components/CustomIconButton'
 
 const TestIconButton = () => {
   return (
@@ -21,25 +17,25 @@ const TestIconButton = () => {
       <Box sx={{ width: '100%' }}>
         <Card>
           <CardContent>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
               IconButton Test Page
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Box>
                 <Typography>Basic IconButton:</Typography>
-                <CustomIconButton color='inherit'>
+                <CustomIconButton color="inherit">
                   <Menu />
                 </CustomIconButton>
               </Box>
               <Box>
                 <Typography>IconButton with primary color:</Typography>
-                <CustomIconButton color='primary'>
+                <CustomIconButton color="primary">
                   <Magnify />
                 </CustomIconButton>
               </Box>
               <Box>
                 <Typography>IconButton with secondary color:</Typography>
-                <CustomIconButton color='secondary'>
+                <CustomIconButton color="secondary">
                   <Menu />
                 </CustomIconButton>
               </Box>

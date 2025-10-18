@@ -1,25 +1,24 @@
 // ** React Import
-import { type ReactNode, useRef, useState } from 'react'
+
+import Box, { type BoxProps } from '@mui/material/Box'
 
 // ** MUI Import
 import List from '@mui/material/List'
-import Box, { type BoxProps } from '@mui/material/Box'
 import { styled, useTheme } from '@mui/material/styles'
+import { type ReactNode, type UIEvent, useRef, useState } from 'react'
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
 // ** Type Import
-import { type Settings } from 'src/@core/context/settingsContext'
-import { type VerticalNavItemsType } from 'src/@core/layouts/types'
-
-// ** Component Imports
-import Drawer from './Drawer'
-import VerticalNavItems from './VerticalNavItems'
-import VerticalNavHeader from './VerticalNavHeader'
-
+import type { Settings } from 'src/@core/context/settingsContext'
+import type { VerticalNavItemsType } from 'src/@core/layouts/types'
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+// ** Component Imports
+import Drawer from './Drawer'
+import VerticalNavHeader from './VerticalNavHeader'
+import VerticalNavItems from './VerticalNavItems'
 
 interface Props {
   hidden: boolean
@@ -31,9 +30,9 @@ interface Props {
   setNavVisible: (value: boolean) => void
   verticalNavItems?: VerticalNavItemsType
   saveSettings: (values: Settings) => void
-  verticalNavMenuContent?: (props?: any) => ReactNode
-  afterVerticalNavMenuContent?: (props?: any) => ReactNode
-  beforeVerticalNavMenuContent?: (props?: any) => ReactNode
+  verticalNavMenuContent?: () => ReactNode
+  afterVerticalNavMenuContent?: () => ReactNode
+  beforeVerticalNavMenuContent?: () => ReactNode
 }
 
 const StyledBoxForShadow = styled(Box)<BoxProps>({
@@ -46,9 +45,13 @@ const StyledBoxForShadow = styled(Box)<BoxProps>({
   pointerEvents: 'none',
   width: 'calc(100% + 15px)',
   '&.d-block': {
-    display: 'block'
-  }
+    display: 'block',
+  },
 })
+
+type ScrollableElement = HTMLElement & {
+  _getBoundingClientRect?: typeof HTMLElement.prototype.getBoundingClientRect
+}
 
 const Navigation = (props: Props) => {
   // ** Props
@@ -56,7 +59,7 @@ const Navigation = (props: Props) => {
     hidden,
     afterVerticalNavMenuContent,
     beforeVerticalNavMenuContent,
-    verticalNavMenuContent: userVerticalNavMenuContent
+    verticalNavMenuContent: userVerticalNavMenuContent,
   } = props
 
   // ** States
@@ -64,49 +67,64 @@ const Navigation = (props: Props) => {
   const [currentActiveGroup, setCurrentActiveGroup] = useState<string[]>([])
 
   // ** Ref
-  const shadowRef = useRef(null)
+  const shadowRef = useRef<HTMLDivElement | null>(null)
 
   // ** Hooks
   const theme = useTheme()
 
   // ** Fixes Navigation InfiniteScroll
-  const handleInfiniteScroll = (ref: HTMLElement) => {
-    if (ref && !Object.prototype.hasOwnProperty.call(ref, '_getBoundingClientRect')) {
-      // 保存原始的 getBoundingClientRect 方法
-      const originalMethod = ref.getBoundingClientRect
-      
-      // 添加自定义属性
-      // @ts-ignore - 添加自定义属性到 HTMLElement
-      ref._getBoundingClientRect = originalMethod
+  const handleInfiniteScroll = (ref: ScrollableElement | null) => {
+    if (!ref || ref._getBoundingClientRect) {
+      return
+    }
 
-      // 重写 getBoundingClientRect 方法
-      ref.getBoundingClientRect = function() {
-        // 调用原始方法
-        // @ts-ignore - 使用自定义属性
-        const original = this._getBoundingClientRect.call(this)
-        
-        // 返回修改后的结果
-        return { ...original, height: Math.floor(original.height) }
-      }
+    const originalMethod = ref.getBoundingClientRect.bind(ref)
+    ref._getBoundingClientRect = originalMethod
+
+    ref.getBoundingClientRect = () => {
+      const original = originalMethod()
+
+      return { ...original, height: Math.floor(original.height) }
     }
   }
 
   // ** Scroll Menu
-  const scrollMenu = (container: any) => {
-    container = hidden ? container.target : container
-    if (shadowRef && container.scrollTop > 0) {
-      // @ts-ignore
-      if (!shadowRef.current.classList.contains('d-block')) {
-        // @ts-ignore
-        shadowRef.current.classList.add('d-block')
-      }
+  const scrollMenu = (source: UIEvent<HTMLDivElement> | HTMLElement) => {
+    const container = source instanceof HTMLElement ? source : (source.currentTarget as HTMLElement)
+
+    if (!shadowRef.current) return
+
+    if (container.scrollTop > 0) {
+      shadowRef.current.classList.add('d-block')
     } else {
-      // @ts-ignore
       shadowRef.current.classList.remove('d-block')
     }
   }
 
-  const ScrollWrapper = hidden ? Box : PerfectScrollbar
+  const renderScrollWrapper = (content: ReactNode) => {
+    if (hidden) {
+      return (
+        <Box
+          onScroll={(event: UIEvent<HTMLDivElement>) => scrollMenu(event)}
+          sx={{ height: '100%', overflowY: 'auto', overflowX: 'hidden' }}
+        >
+          {content}
+        </Box>
+      )
+    }
+
+    return (
+      <PerfectScrollbar
+        options={{ wheelPropagation: false }}
+        onScrollY={(container: HTMLElement) => scrollMenu(container)}
+        containerRef={(ref: HTMLElement | null) =>
+          handleInfiniteScroll(ref as ScrollableElement | null)
+        }
+      >
+        {content}
+      </PerfectScrollbar>
+    )
+  }
 
   return (
     <Drawer {...props}>
@@ -116,43 +134,40 @@ const Navigation = (props: Props) => {
         sx={{
           background: `linear-gradient(${theme.palette.background.default} 40%,${hexToRGBA(
             theme.palette.background.default,
-            0.1
-          )} 95%,${hexToRGBA(theme.palette.background.default, 0.05)})`
+            0.1,
+          )} 95%,${hexToRGBA(theme.palette.background.default, 0.05)})`,
         }}
       />
       <Box sx={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
-        {/* @ts-ignore */}
-        <ScrollWrapper
-          {...(hidden
-            ? {
-                onScroll: (container: any) => scrollMenu(container),
-                sx: { height: '100%', overflowY: 'auto', overflowX: 'hidden' }
-              }
-            : {
-                options: { wheelPropagation: false },
-                onScrollY: (container: any) => scrollMenu(container),
-                containerRef: (ref: any) => handleInfiniteScroll(ref)
-              })}
-        >
-          {beforeVerticalNavMenuContent ? beforeVerticalNavMenuContent(props) : null}
-          <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            {userVerticalNavMenuContent ? (
-              userVerticalNavMenuContent(props)
-            ) : (
-              <List className='nav-items' sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
-                <VerticalNavItems
-                  groupActive={groupActive}
-                  setGroupActive={setGroupActive}
-                  currentActiveGroup={currentActiveGroup}
-                  setCurrentActiveGroup={setCurrentActiveGroup}
-                  {...props}
-                />
-              </List>
-            )}
-          </Box>
-        </ScrollWrapper>
+        {renderScrollWrapper(
+          <>
+            {beforeVerticalNavMenuContent ? beforeVerticalNavMenuContent() : null}
+            <Box
+              sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              {userVerticalNavMenuContent ? (
+                userVerticalNavMenuContent()
+              ) : (
+                <List className="nav-items" sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
+                  <VerticalNavItems
+                    groupActive={groupActive}
+                    setGroupActive={setGroupActive}
+                    currentActiveGroup={currentActiveGroup}
+                    setCurrentActiveGroup={setCurrentActiveGroup}
+                    {...props}
+                  />
+                </List>
+              )}
+            </Box>
+          </>,
+        )}
       </Box>
-      {afterVerticalNavMenuContent ? afterVerticalNavMenuContent(props) : null}
+      {afterVerticalNavMenuContent ? afterVerticalNavMenuContent() : null}
     </Drawer>
   )
 }

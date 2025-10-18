@@ -1,15 +1,15 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type GetServerSidePropsContext } from "next";
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import {
-  getServerSession,
   type DefaultSession,
+  getServerSession,
   type NextAuthOptions,
-} from "next-auth";
-import { type Adapter } from "next-auth/adapters";
-import DiscordProvider from "next-auth/providers/discord";
+  type Session,
+} from 'next-auth'
+import type { Adapter } from 'next-auth/adapters'
+import DiscordProvider from 'next-auth/providers/discord'
 
-import { env } from "~/env";
-import { db } from "~/server/db";
+import { env } from '~/env'
+import { db } from '~/server/db'
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -17,13 +17,13 @@ import { db } from "~/server/db";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
-    user: DefaultSession["user"] & {
-      id: string;
+    user: DefaultSession['user'] & {
+      id: string
       // ...other properties
       // role: UserRole;
-    };
+    }
   }
 
   // interface User {
@@ -63,16 +63,19 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-};
+}
 
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
+type GetServerSessionParams = Parameters<typeof getServerSession<typeof authOptions, Session>>
+
 export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
-};
+  req: GetServerSessionParams[0]
+  res: GetServerSessionParams[1]
+}): Promise<Session | null> => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- NextAuth helper signature triggers false positive despite typed params
+  return getServerSession<typeof authOptions, Session>(ctx.req, ctx.res, authOptions)
+}

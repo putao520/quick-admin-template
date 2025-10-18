@@ -1,37 +1,36 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
-
+import type { Theme } from '@mui/material/styles'
+import MuiAccordion from './accordion'
+import MuiAlerts from './alerts'
+import MuiAvatar from './avatars'
+import MuiBackdrop from './backdrop'
+import MuiButton from './button'
 // ** Overrides Imports
 import MuiCard from './card'
 import MuiChip from './chip'
+import MuiDateTimePicker from './dateTimePicker'
+import MuiDialog from './dialog'
+import MuiDivider from './divider'
+import MuiIconButton from './iconButton'
+import MuiInput from './input'
 import MuiLink from './link'
 import MuiList from './list'
 import MuiMenu from './menu'
-import MuiTabs from './tabs'
-import MuiInput from './input'
+import MuiPagination from './pagination'
 import MuiPaper from './paper'
-import MuiTable from './table'
-import MuiAlerts from './alerts'
-import MuiButton from './button'
-import MuiDialog from './dialog'
+import MuiPopover from './popover'
 import MuiRating from './rating'
 import MuiSelect from './select'
-import MuiAvatar from './avatars'
-import MuiDivider from './divider'
-import MuiPopover from './popover'
-import MuiTooltip from './tooltip'
-import MuiBackdrop from './backdrop'
 import MuiSnackbar from './snackbar'
 import MuiSwitches from './switches'
+import MuiTable from './table'
+import MuiTabs from './tabs'
 import MuiTimeline from './timeline'
-import MuiAccordion from './accordion'
-import MuiPagination from './pagination'
-import MuiTypography from './typography'
 import MuiToggleButton from './toggleButton'
-import MuiDateTimePicker from './dateTimePicker'
-import MuiIconButton from './iconButton'
+import MuiTooltip from './tooltip'
+import MuiTypography from './typography'
 
-const Overrides = (theme: Theme) => {
+const Overrides = (theme: Theme): Theme['components'] => {
   const chip = MuiChip(theme)
   const list = MuiList(theme)
   const menu = MuiMenu(theme)
@@ -84,8 +83,8 @@ const Overrides = (theme: Theme) => {
     MuiTypography,
     dateTimePicker,
     MuiToggleButton,
-    iconButton
-  )
+    iconButton,
+  ) as Theme['components']
 }
 
 export default Overrides

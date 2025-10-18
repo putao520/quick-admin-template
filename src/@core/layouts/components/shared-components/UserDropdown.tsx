@@ -1,27 +1,26 @@
 // ** React Imports
-import { useState, type SyntheticEvent, useCallback, useMemo } from 'react'
 
-// ** Next Import
-import { useRouter } from 'next/router'
+import Avatar from '@mui/material/Avatar'
+import Badge from '@mui/material/Badge'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Menu from '@mui/material/Menu'
-import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
 import Divider from '@mui/material/Divider'
+import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-
+import AccountOutline from 'mdi-material-ui/AccountOutline'
 // ** Icons Imports
 import CogOutline from 'mdi-material-ui/CogOutline'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import EmailOutline from 'mdi-material-ui/EmailOutline'
-import LogoutVariant from 'mdi-material-ui/LogoutVariant'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
-import MessageOutline from 'mdi-material-ui/MessageOutline'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
+import LogoutVariant from 'mdi-material-ui/LogoutVariant'
+import MessageOutline from 'mdi-material-ui/MessageOutline'
+// ** Next Import
+import { useRouter } from 'next/router'
+import { type SyntheticEvent, useCallback, useMemo, useState } from 'react'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -29,7 +28,7 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
   height: 8,
   borderRadius: '50%',
   backgroundColor: theme.palette.success.main,
-  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
+  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
 }))
 
 const UserDropdown = () => {
@@ -44,42 +43,48 @@ const UserDropdown = () => {
     setAnchorEl(event.currentTarget)
   }, [])
 
-  const handleDropdownClose = useCallback((url?: string) => {
-    if (url) {
-      router.push(url)
-    }
-    setAnchorEl(null)
-  }, [router])
+  const handleDropdownClose = useCallback(
+    (url?: string) => {
+      if (url) {
+        void router.push(url)
+      }
+      setAnchorEl(null)
+    },
+    [router],
+  )
 
   // 使用 useMemo 缓存样式对象，避免在每次渲染时重新创建
-  const styles = useMemo(() => ({
-    py: 2,
-    px: 4,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    color: 'text.primary',
-    textDecoration: 'none',
-    '& svg': {
-      fontSize: '1.375rem',
-      color: 'text.secondary'
-    }
-  }), [])
+  const styles = useMemo(
+    () => ({
+      py: 2,
+      px: 4,
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      color: 'text.primary',
+      textDecoration: 'none',
+      '& svg': {
+        fontSize: '1.375rem',
+        color: 'text.secondary',
+      },
+    }),
+    [],
+  )
 
   return (
     <>
       <Badge
-        overlap='circular'
+        overlap="circular"
         onClick={handleDropdownOpen}
         sx={{ ml: 2, cursor: 'pointer' }}
         badgeContent={<BadgeContentSpan />}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Avatar
-          alt='John Doe'
+          alt="John Doe"
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src='/images/avatars/1.png'
+          src="/images/avatars/1.png"
         />
       </Badge>
       <Menu
@@ -93,15 +98,26 @@ const UserDropdown = () => {
         <Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
-              overlap='circular'
+              overlap="circular"
               badgeContent={<BadgeContentSpan />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
-              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
+              <Avatar
+                alt="John Doe"
+                src="/images/avatars/1.png"
+                sx={{ width: '2.5rem', height: '2.5rem' }}
+              />
             </Badge>
-            <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                marginLeft: 3,
+                alignItems: 'flex-start',
+                flexDirection: 'column',
+              }}
+            >
               <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
-              <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+              <Typography variant="body2" sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                 Admin
               </Typography>
             </Box>

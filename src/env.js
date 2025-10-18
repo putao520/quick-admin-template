@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { createEnv } from '@t3-oss/env-nextjs'
+import { z } from 'zod'
 
 export const env = createEnv({
   /**
@@ -7,42 +7,37 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
-    NODE_ENV: z
-      .enum(["development", "test", "production"])
-      .default("development"),
-    NEXTAUTH_SECRET:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
+    // Allow non-URL Prisma connection strings like file:./db.sqlite
+    DATABASE_URL: z.string(),
+    NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+    NEXTAUTH_SECRET: process.env.NODE_ENV === 'production' ? z.string() : z.string().optional(),
     NEXTAUTH_URL: z.preprocess(
       // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-      process.env.VERCEL ? z.string() : z.string().url()
+      process.env.VERCEL ? z.string() : z.string().url(),
     ),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
 
     EVENT_REDIS_URI: z.string().url().optional(),
-    EVENT_REDIS_MODE: z.enum(["single", "cluster"]).default("single"),
+    EVENT_REDIS_MODE: z.enum(['single', 'cluster']).default('single'),
 
     REDIS_URI: z.string().url().optional(),
-    REDIS_MODE: z.enum(["single", "cluster"]).default("single"),
+    REDIS_MODE: z.enum(['single', 'cluster']).default('single'),
 
     PERSISTENT_REDIS_URI: z.string().url().optional(),
-    PERSISTENT_REDIS_MODE: z.enum(["single", "cluster"]).default("single"),
+    PERSISTENT_REDIS_MODE: z.enum(['single', 'cluster']).default('single'),
 
     S3_STORAGE_BUCKET: z.string().optional(),
     S3_STORAGE_REGION: z.string().optional(),
     S3_STORAGE_ACCESS_KEY: z.string().optional(),
     S3_STORAGE_SECRET_KEY: z.string().optional(),
     S3_STORAGE_ENDPOINT: z.string().optional(),
-    S3_STORAGE_PORT: z.number().optional(),
-    S3_STORAGE_SECURE: z.boolean().optional(),
-
-    NEXT_PUBLIC_RESOURCES_URL: z.string().optional(),
+    // Coerce from string envs to proper types
+    S3_STORAGE_PORT: z.coerce.number().optional(),
+    S3_STORAGE_SECURE: z.coerce.boolean().optional(),
   },
 
   /**
@@ -51,7 +46,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_RESOURCES_URL: z.string().optional(),
   },
 
   /**
@@ -90,4 +85,4 @@ export const env = createEnv({
    * `SOME_VAR=''` will throw an error.
    */
   emptyStringAsUndefined: true,
-});
+})

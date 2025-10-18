@@ -1,20 +1,33 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+
+import type { IconButtonProps } from '@mui/material/IconButton'
+import type { Theme } from '@mui/material/styles'
+import type { CSSInterpolation } from '@mui/system'
 
 const IconButton = (theme: Theme) => {
   return {
     MuiIconButton: {
       defaultProps: {
-        color: 'inherit'
+        color: 'inherit',
       },
       styleOverrides: {
-        root: {
-          '&:not([color])': {
-            color: theme.palette.text.secondary
+        root: ({
+          ownerState,
+        }: {
+          ownerState: {
+            color?: IconButtonProps['color']
           }
-        }
-      }
-    }
+        }): CSSInterpolation => {
+          const isInherit = !ownerState.color || ownerState.color === 'inherit'
+
+          return {
+            ...(isInherit && {
+              color: theme.palette.text.secondary,
+            }),
+          }
+        },
+      },
+    },
   }
 }
 

@@ -1,12 +1,12 @@
 // ** React Imports
-import { type ReactNode } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
+import type { ReactNode } from 'react'
 
 // ** Type Import
-import { type Settings } from 'src/@core/context/settingsContext'
+import type { Settings } from 'src/@core/context/settingsContext'
 
 // ** Footer Content Component
 import FooterContent from './FooterContent'
@@ -14,7 +14,7 @@ import FooterContent from './FooterContent'
 interface Props {
   settings: Settings
   saveSettings: (values: Settings) => void
-  footerContent?: (props?: any) => ReactNode
+  footerContent?: () => ReactNode
 }
 
 const Footer = (props: Props) => {
@@ -29,26 +29,26 @@ const Footer = (props: Props) => {
 
   return (
     <Box
-      component='footer'
-      className='layout-footer'
+      component="footer"
+      className="layout-footer"
       sx={{
         zIndex: 10,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <Box
-        className='footer-content-container'
+        className="footer-content-container"
         sx={{
           width: '100%',
           borderTopLeftRadius: 14,
           borderTopRightRadius: 14,
           padding: theme.spacing(4, 6),
-          ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } })
+          ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } }),
         }}
       >
-        {userFooterContent ? userFooterContent(props) : <FooterContent />}
+        {userFooterContent ? userFooterContent() : <FooterContent />}
       </Box>
     </Box>
   )

@@ -1,26 +1,26 @@
 // ** React Imports
-import { type ChangeEvent, type MouseEvent, useState, type SyntheticEvent } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
 import FormHelperText from '@mui/material/FormHelperText'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import Link from '@mui/material/Link'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import { type ChangeEvent, type MouseEvent, type SyntheticEvent, useId, useState } from 'react'
 
 interface State {
   password: string
@@ -31,11 +31,11 @@ const FormLayoutsBasic = () => {
   // ** States
   const [values, setValues] = useState<State>({
     password: '',
-    showPassword: false
+    showPassword: false,
   })
   const [confirmPassValues, setConfirmPassValues] = useState<State>({
     password: '',
-    showPassword: false
+    showPassword: false,
   })
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +45,6 @@ const FormLayoutsBasic = () => {
   const handleConfirmPassChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassValues({ ...confirmPassValues, [prop]: event.target.value })
   }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-
   const handleClickConfirmPassShow = () => {
     setConfirmPassValues({ ...confirmPassValues, showPassword: !confirmPassValues.showPassword })
   }
@@ -57,77 +53,82 @@ const FormLayoutsBasic = () => {
     event.preventDefault()
   }
 
+  const passwordInputId = useId()
+  const passwordHelperId = `${passwordInputId}-helper`
+  const confirmPasswordInputId = useId()
+  const confirmPasswordHelperId = `${confirmPasswordInputId}-helper`
+
   return (
     <Card>
-      <CardHeader title='Basic' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title="Basic" titleTypographyProps={{ variant: 'h6' }} />
       <CardContent>
-        <form onSubmit={e => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <Grid container spacing={5}>
             <Grid size={12}>
-              <TextField fullWidth label='Name' placeholder='Leonard Carter' />
+              <TextField fullWidth label="Name" placeholder="Leonard Carter" />
             </Grid>
             <Grid size={12}>
               <TextField
                 fullWidth
-                type='email'
-                label='Email'
-                placeholder='carterleonard@gmail.com'
-                helperText='You can use letters, numbers & periods'
+                type="email"
+                label="Email"
+                placeholder="carterleonard@gmail.com"
+                helperText="You can use letters, numbers & periods"
               />
             </Grid>
             <Grid size={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-basic-password'>Password</InputLabel>
+                <InputLabel htmlFor={passwordInputId}>Password</InputLabel>
                 <OutlinedInput
-                  label='Password'
+                  label="Password"
                   value={values.password}
-                  id='form-layouts-basic-password'
+                  id={passwordInputId}
                   onChange={handleChange('password')}
                   type={values.showPassword ? 'text' : 'password'}
-                  aria-describedby='form-layouts-basic-password-helper'
+                  aria-describedby={passwordHelperId}
                   endAdornment={
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
-                        edge='end'
+                        edge="end"
                         onClick={() => setValues({ ...values, showPassword: !values.showPassword })}
-                        aria-label='toggle password visibility'
-                        color='inherit'
+                        aria-label="toggle password visibility"
+                        color="inherit"
                       >
                         {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
-                <FormHelperText id='form-layouts-basic-password-helper'>
+                <FormHelperText id={passwordHelperId}>
                   Use 8 or more characters with a mix of letters, numbers & symbols
                 </FormHelperText>
               </FormControl>
             </Grid>
             <Grid size={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-confirm-password'>Confirm Password</InputLabel>
+                <InputLabel htmlFor={confirmPasswordInputId}>Confirm Password</InputLabel>
                 <OutlinedInput
-                  label='Confirm Password'
+                  label="Confirm Password"
                   value={confirmPassValues.password}
-                  id='form-layouts-confirm-password'
+                  id={confirmPasswordInputId}
                   onChange={handleConfirmPassChange('password')}
-                  aria-describedby='form-layouts-confirm-password-helper'
+                  aria-describedby={confirmPasswordHelperId}
                   type={confirmPassValues.showPassword ? 'text' : 'password'}
                   endAdornment={
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
-                        edge='end'
+                        edge="end"
                         onClick={handleClickConfirmPassShow}
                         onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                        color='inherit'
+                        aria-label="toggle password visibility"
+                        color="inherit"
                       >
                         {confirmPassValues.showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
-                <FormHelperText id='form-layouts-confirm-password-helper'>
+                <FormHelperText id={confirmPasswordHelperId}>
                   Make sure to type the same password as above
                 </FormHelperText>
               </FormControl>
@@ -139,15 +140,15 @@ const FormLayoutsBasic = () => {
                   display: 'flex',
                   flexWrap: 'wrap',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
                 }}
               >
-                <Button type='submit' variant='contained' size='large'>
+                <Button type="submit" variant="contained" size="large">
                   Get Started!
                 </Button>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography sx={{ mr: 2 }}>Already have an account?</Typography>
-                  <Link href='/' onClick={(e: SyntheticEvent) => e.preventDefault()}>
+                  <Link href="/" onClick={(e: SyntheticEvent) => e.preventDefault()}>
                     Log in
                   </Link>
                 </Box>
@@ -157,7 +158,7 @@ const FormLayoutsBasic = () => {
         </form>
       </CardContent>
     </Card>
-  );
+  )
 }
 
 export default FormLayoutsBasic

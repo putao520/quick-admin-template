@@ -1,25 +1,28 @@
 // ** React Imports
-import { type ChangeEvent, type MouseEvent, useState } from 'react'
+
+import Avatar from '@mui/material/Avatar'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import Typography from '@mui/material/Typography'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import KeyOutline from 'mdi-material-ui/KeyOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
+import { type ChangeEvent, type MouseEvent, useId, useState } from 'react'
+
+import OptimizedImage from 'src/components/OptimizedImage'
 
 interface State {
   newPassword: string
@@ -38,13 +41,17 @@ const TabSecurity = () => {
     showNewPassword: false,
     confirmNewPassword: '',
     showCurrentPassword: false,
-    showConfirmNewPassword: false
+    showConfirmNewPassword: false,
   })
+  const currentPasswordId = useId()
+  const newPasswordId = useId()
+  const confirmPasswordId = useId()
 
   // Handle Current Password
-  const handleCurrentPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  const handleCurrentPasswordChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value })
+    }
   const handleClickShowCurrentPassword = () => {
     setValues({ ...values, showCurrentPassword: !values.showCurrentPassword })
   }
@@ -64,9 +71,10 @@ const TabSecurity = () => {
   }
 
   // Handle Confirm New Password
-  const handleConfirmNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  const handleConfirmNewPasswordChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value })
+    }
   const handleClickShowConfirmNewPassword = () => {
     setValues({ ...values, showConfirmNewPassword: !values.showConfirmNewPassword })
   }
@@ -81,26 +89,27 @@ const TabSecurity = () => {
           <Grid
             size={{
               xs: 12,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <Grid container spacing={5}>
               <Grid sx={{ marginTop: 4.75 }} size={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-current-password'>Current Password</InputLabel>
+                  <InputLabel htmlFor={currentPasswordId}>Current Password</InputLabel>
                   <OutlinedInput
-                    label='Current Password'
+                    label="Current Password"
                     value={values.currentPassword}
-                    id='account-settings-current-password'
+                    id={currentPasswordId}
                     type={values.showCurrentPassword ? 'text' : 'password'}
                     onChange={handleCurrentPasswordChange('currentPassword')}
                     endAdornment={
-                      <InputAdornment position='end'>
+                      <InputAdornment position="end">
                         <IconButton
-                          edge='end'
-                          aria-label='toggle password visibility'
+                          edge="end"
+                          aria-label="toggle password visibility"
                           onClick={handleClickShowCurrentPassword}
                           onMouseDown={handleMouseDownCurrentPassword}
-                          color='inherit'
+                          color="inherit"
                         >
                           {values.showCurrentPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -112,21 +121,21 @@ const TabSecurity = () => {
 
               <Grid sx={{ marginTop: 6 }} size={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-new-password'>New Password</InputLabel>
+                  <InputLabel htmlFor={newPasswordId}>New Password</InputLabel>
                   <OutlinedInput
-                    label='New Password'
+                    label="New Password"
                     value={values.newPassword}
-                    id='account-settings-new-password'
+                    id={newPasswordId}
                     onChange={handleNewPasswordChange('newPassword')}
                     type={values.showNewPassword ? 'text' : 'password'}
                     endAdornment={
-                      <InputAdornment position='end'>
+                      <InputAdornment position="end">
                         <IconButton
-                          edge='end'
+                          edge="end"
                           onClick={handleClickShowNewPassword}
-                          aria-label='toggle password visibility'
+                          aria-label="toggle password visibility"
                           onMouseDown={handleMouseDownNewPassword}
-                          color='inherit'
+                          color="inherit"
                         >
                           {values.showNewPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -138,21 +147,21 @@ const TabSecurity = () => {
 
               <Grid size={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-confirm-new-password'>Confirm New Password</InputLabel>
+                  <InputLabel htmlFor={confirmPasswordId}>Confirm New Password</InputLabel>
                   <OutlinedInput
-                    label='Confirm New Password'
+                    label="Confirm New Password"
                     value={values.confirmNewPassword}
-                    id='account-settings-confirm-new-password'
+                    id={confirmPasswordId}
                     type={values.showConfirmNewPassword ? 'text' : 'password'}
                     onChange={handleConfirmNewPasswordChange('confirmNewPassword')}
                     endAdornment={
-                      <InputAdornment position='end'>
+                      <InputAdornment position="end">
                         <IconButton
-                          edge='end'
-                          aria-label='toggle password visibility'
+                          edge="end"
+                          aria-label="toggle password visibility"
                           onClick={handleClickShowConfirmNewPassword}
                           onMouseDown={handleMouseDownConfirmNewPassword}
-                          color='inherit'
+                          color="inherit"
                         >
                           {values.showConfirmNewPassword ? <EyeOutline /> : <EyeOffOutline />}
                         </IconButton>
@@ -165,12 +174,32 @@ const TabSecurity = () => {
           </Grid>
 
           <Grid
-            sx={{ display: 'flex', marginTop: [7.5, 2.5], alignItems: 'center', justifyContent: 'center' }}
+            sx={{
+              display: 'flex',
+              marginTop: [7.5, 2.5],
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             size={{
               sm: 6,
-              xs: 12
-            }}>
-            <img width={183} alt='avatar' height={256} src='/images/pages/pose-m-1.png' />
+              xs: 12,
+            }}
+          >
+            <Box
+              sx={{
+                width: 183,
+                height: 256,
+                position: 'relative',
+              }}
+            >
+              <OptimizedImage
+                src="/images/pages/pose-m-1.png"
+                alt="avatar"
+                fill
+                sizes="183px"
+                style={{ objectFit: 'contain' }}
+              />
+            </Box>
           </Grid>
         </Grid>
       </CardContent>
@@ -178,7 +207,7 @@ const TabSecurity = () => {
       <CardContent>
         <Box sx={{ mt: 1.75, display: 'flex', alignItems: 'center' }}>
           <KeyOutline sx={{ marginRight: 3 }} />
-          <Typography variant='h6'>Two-factor authentication</Typography>
+          <Typography variant="h6">Two-factor authentication</Typography>
         </Box>
 
         <Box sx={{ mt: 5.75, display: 'flex', justifyContent: 'center' }}>
@@ -188,11 +217,11 @@ const TabSecurity = () => {
               display: 'flex',
               textAlign: 'center',
               alignItems: 'center',
-              flexDirection: 'column'
+              flexDirection: 'column',
             }}
           >
             <Avatar
-              variant='rounded'
+              variant="rounded"
               sx={{ width: 48, height: 48, color: 'common.white', backgroundColor: 'primary.main' }}
             >
               <LockOpenOutline sx={{ fontSize: '1.75rem' }} />
@@ -200,28 +229,30 @@ const TabSecurity = () => {
             <Typography sx={{ fontWeight: 600, marginTop: 3.5, marginBottom: 3.5 }}>
               Two factor authentication is not enabled yet.
             </Typography>
-            <Typography variant='body2'>
-              Two-factor authentication adds an additional layer of security to your account by requiring more than just
-              a password to log in. Learn more.
+            <Typography variant="body2">
+              Two-factor authentication adds an additional layer of security to your account by
+              requiring more than just a password to log in. Learn more.
             </Typography>
           </Box>
         </Box>
 
         <Box sx={{ mt: 11 }}>
-          <Button variant='contained' sx={{ marginRight: 3.5 }}>
+          <Button variant="contained" sx={{ marginRight: 3.5 }}>
             Save Changes
           </Button>
           <Button
-            type='reset'
-            variant='outlined'
-            color='secondary'
-            onClick={() => setValues({ ...values, currentPassword: '', newPassword: '', confirmNewPassword: '' })}
+            type="reset"
+            variant="outlined"
+            color="secondary"
+            onClick={() =>
+              setValues({ ...values, currentPassword: '', newPassword: '', confirmNewPassword: '' })
+            }
           >
             Reset
           </Button>
         </Box>
       </CardContent>
     </form>
-  );
+  )
 }
 export default TabSecurity

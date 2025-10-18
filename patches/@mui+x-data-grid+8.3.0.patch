@@ -1,0 +1,29 @@
+diff --git a/node_modules/@mui/x-data-grid/DataGrid/index.js b/node_modules/@mui/x-data-grid/DataGrid/index.js
+index b3a8bba..0539409 100644
+--- a/node_modules/@mui/x-data-grid/DataGrid/index.js
++++ b/node_modules/@mui/x-data-grid/DataGrid/index.js
+@@ -3,7 +3,6 @@
+ Object.defineProperty(exports, "__esModule", {
+   value: true
+ });
+-require("../index.css");
+ var _DataGrid = require("./DataGrid");
+ Object.keys(_DataGrid).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+@@ -15,3 +14,4 @@ Object.keys(_DataGrid).forEach(function (key) {
+     }
+   });
+ });
++exports.default = _DataGrid.DataGrid;
+\ No newline at end of file
+diff --git a/node_modules/@mui/x-data-grid/esm/DataGrid/index.js b/node_modules/@mui/x-data-grid/esm/DataGrid/index.js
+index d24ee15..f2d9c84 100644
+--- a/node_modules/@mui/x-data-grid/esm/DataGrid/index.js
++++ b/node_modules/@mui/x-data-grid/esm/DataGrid/index.js
+@@ -1,2 +1,3 @@
+-import "../index.css";
+-export * from "./DataGrid.js";
+\ No newline at end of file
++import { DataGrid } from './DataGrid.js';
++export { DataGrid };
++export default DataGrid;

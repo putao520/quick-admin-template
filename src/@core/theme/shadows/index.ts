@@ -1,11 +1,11 @@
 // ** Theme Type Import
-import { type PaletteMode, type ThemeOptions } from '@mui/material'
+import type { PaletteMode, ThemeOptions } from '@mui/material'
 
 const Shadows = (mode: PaletteMode): ThemeOptions['shadows'] => {
   // MUI v7 要求使用标准的 RGB 格式
   // 定义颜色变量
   const lightRGB = { r: 58, g: 53, b: 65 }
-  
+
   if (mode === 'light') {
     return [
       'none',
@@ -32,12 +32,12 @@ const Shadows = (mode: PaletteMode): ThemeOptions['shadows'] => {
       `0px 10px 13px -6px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.2), 0px 21px 33px 3px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.14), 0px 8px 40px 7px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.12)`,
       `0px 10px 14px -6px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.2), 0px 22px 35px 3px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.14), 0px 8px 42px 7px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.12)`,
       `0px 11px 14px -7px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.2), 0px 23px 36px 3px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.14), 0px 9px 44px 8px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.12)`,
-      `0px 11px 15px -7px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.2), 0px 24px 38px 3px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.14), 0px 9px 46px 8px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.12)`
+      `0px 11px 15px -7px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.2), 0px 24px 38px 3px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.14), 0px 9px 46px 8px rgba(${lightRGB.r}, ${lightRGB.g}, ${lightRGB.b}, 0.12)`,
     ]
   } else {
     // 暗色模式下的颜色变量
     const darkRGB = { r: 19, g: 17, b: 32 }
-    
+
     return [
       'none',
       `0px 2px 1px -1px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 1px 1px 0px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 1px 3px 0px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`,
@@ -63,7 +63,7 @@ const Shadows = (mode: PaletteMode): ThemeOptions['shadows'] => {
       `0px 10px 13px -6px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 21px 33px 3px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 8px 40px 7px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`,
       `0px 10px 14px -6px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 22px 35px 3px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 8px 42px 7px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`,
       `0px 11px 14px -7px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 23px 36px 3px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 9px 44px 8px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`,
-      `0px 11px 15px -7px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 24px 38px 3px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 9px 46px 8px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`
+      `0px 11px 15px -7px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.2), 0px 24px 38px 3px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.14), 0px 9px 46px 8px rgba(${darkRGB.r}, ${darkRGB.g}, ${darkRGB.b}, 0.12)`,
     ]
   }
 }

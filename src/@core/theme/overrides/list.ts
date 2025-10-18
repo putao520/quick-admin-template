@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 
 const List = (theme: Theme) => {
   return {
@@ -8,36 +8,36 @@ const List = (theme: Theme) => {
         root: {
           minWidth: 0,
           marginRight: theme.spacing(2.25),
-          color: theme.palette.text.secondary
-        }
-      }
+          color: theme.palette.text.secondary,
+        },
+      },
     },
     MuiListItemAvatar: {
       styleOverrides: {
         root: {
           minWidth: 0,
-          marginRight: theme.spacing(4)
-        }
-      }
+          marginRight: theme.spacing(4),
+        },
+      },
     },
     MuiListItemText: {
       styleOverrides: {
         dense: {
           '& .MuiListItemText-primary': {
-            color: theme.palette.text.primary
-          }
-        }
-      }
+            color: theme.palette.text.primary,
+          },
+        },
+      },
     },
     MuiListSubheader: {
       styleOverrides: {
         root: {
           fontWeight: 600,
           textTransform: 'uppercase',
-          color: theme.palette.text.primary
-        }
-      }
-    }
+          color: theme.palette.text.primary,
+        },
+      },
+    },
   }
 }
 

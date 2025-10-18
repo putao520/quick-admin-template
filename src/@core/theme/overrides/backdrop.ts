@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
@@ -12,13 +12,13 @@ const Backdrop = (theme: Theme) => {
           backgroundColor:
             theme.palette.mode === 'light'
               ? `rgba(${theme.palette.customColors.main}, 0.7)`
-              : hexToRGBA(theme.palette.background.default, 0.7)
+              : hexToRGBA(theme.palette.background.default, 0.7),
         },
         invisible: {
-          backgroundColor: 'transparent'
-        }
-      }
-    }
+          backgroundColor: 'transparent',
+        },
+      },
+    },
   }
 }
 

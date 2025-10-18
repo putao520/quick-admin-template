@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
@@ -24,15 +20,9 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
-      ],
-      "apexcharts": [
-        "node_modules/apexcharts-clevision"
-      ],
-      "apexcharts/*": [
-        "node_modules/apexcharts-clevision/*"
-      ]
+      "~/*": ["src/*"],
+      "apexcharts": ["node_modules/apexcharts-clevision"],
+      "apexcharts/*": ["node_modules/apexcharts-clevision/*"]
     }
   },
   "include": [
@@ -44,7 +34,5 @@
     "**/*.cjs",
     "**/*.mjs"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

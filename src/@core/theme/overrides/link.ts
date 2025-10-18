@@ -1,9 +1,11 @@
-export default {
+const linkOverride = {
   MuiLink: {
     styleOverrides: {
       root: {
-        textDecoration: 'none'
-      }
-    }
-  }
+        textDecoration: 'none',
+      },
+    },
+  },
 }
+
+export default linkOverride

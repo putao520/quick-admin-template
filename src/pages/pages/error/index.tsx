@@ -1,5 +1,5 @@
 // ** React Imports
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'

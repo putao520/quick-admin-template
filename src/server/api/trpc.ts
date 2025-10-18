@@ -7,15 +7,15 @@
  * need to use are documented accordingly near the end.
  */
 
-import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { initTRPC, TRPCError } from '@trpc/server'
+import type { CreateNextContextOptions } from '@trpc/server/adapters/next'
+import type { Session } from 'next-auth'
+import superjson from 'superjson'
+import { ZodError } from 'zod'
 
-import { getServerAuthSession } from "~/server/auth";
-import { db } from "~/server/db";
-import {persistent} from "~/server/persistent";
+import { getServerAuthSession } from '~/server/auth'
+import { db } from '~/server/db'
+import { persistent } from '~/server/persistent'
 
 /**
  * 1. CONTEXT
@@ -25,8 +25,8 @@ import {persistent} from "~/server/persistent";
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-interface CreateContextOptions {
-  session: Session | null;
+export interface CreateInnerContextOptions {
+  session: Session | null
 }
 
 /**
@@ -39,13 +39,13 @@ interface CreateContextOptions {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
+export const createInnerTRPCContext = (opts: CreateInnerContextOptions) => {
   return {
     session: opts.session,
     persistent,
     db,
-  };
-};
+  }
+}
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -54,15 +54,18 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
-
   // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment -- NextAuth helper returns well-typed Session but rule misidentifies generics */
+  const session: Awaited<ReturnType<typeof getServerAuthSession>> = await getServerAuthSession({
+    req: opts.req,
+    res: opts.res,
+  })
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment */
 
   return createInnerTRPCContext({
     session,
-  });
-};
+  })
+}
 
 /**
  * 2. INITIALIZATION
@@ -74,24 +77,27 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
-  errorFormatter({ shape, error }) {
+  errorFormatter(opts) {
+    /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
+    const { shape, error } = opts
+    const zodError = error.cause instanceof ZodError ? error.cause.flatten() : null
+    /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
     return {
       ...shape,
       data: {
         ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+        zodError,
       },
-    };
+    }
   },
-});
+})
 
 /**
  * Create a server-side caller.
  *
  * @see https://trpc.io/docs/server/server-side-calls
  */
-export const createCallerFactory = t.createCallerFactory;
+export const createCallerFactory = t.createCallerFactory
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -105,7 +111,7 @@ export const createCallerFactory = t.createCallerFactory;
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router;
+export const createTRPCRouter = t.router
 
 /**
  * Public (unauthenticated) procedure
@@ -114,7 +120,7 @@ export const createTRPCRouter = t.router;
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure
 
 /**
  * Protected (authenticated) procedure
@@ -125,13 +131,13 @@ export const publicProcedure = t.procedure;
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
     },
-  });
-});
+  })
+})

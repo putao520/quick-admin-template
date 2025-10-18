@@ -1,8 +1,8 @@
 // ** MUI Imports
-import { type PaletteMode } from '@mui/material'
+import type { PaletteMode } from '@mui/material'
 
 // ** Types
-import { type ContentWidth } from 'src/@core/layouts/types'
+import type { ContentWidth } from 'src/@core/layouts/types'
 
 type ThemeConfig = {
   mode: PaletteMode
@@ -30,7 +30,7 @@ const themeConfig: ThemeConfig = {
 
   // ** Other Configs
   responsiveFontSizes: true /* true | false */,
-  disableRipple: false /* true | false */
+  disableRipple: false /* true | false */,
 }
 
 export default themeConfig

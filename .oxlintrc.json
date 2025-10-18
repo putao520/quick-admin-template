@@ -1,0 +1,13 @@
+{
+  "$schema": "https://oxc.rs/schema/oxlintrc.schema.json",
+  "globals": {
+    "React": true
+  },
+  "lints": {
+    "recommended": true,
+    "react": true,
+    "nextjs": true,
+    "typescript": true
+  },
+  "ignore": [".next/**", "node_modules/**", "public/**"]
+}

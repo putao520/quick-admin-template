@@ -1,10 +1,10 @@
-import { env } from "~/env";
-import { GetCacheClient } from "./cache";
-import { type RedisClientType } from "redis";
+import type { RedisClientType } from 'redis'
+import { env } from '~/env'
+import { GetCacheClient } from './cache'
 
-export const GetCommonCacheClient = async ():Promise<RedisClientType> => {
-	return await GetCacheClient({
-		url: env.REDIS_URI ?? "",
-		mode: env.REDIS_MODE
-	})
+export const GetCommonCacheClient = async (): Promise<RedisClientType> => {
+  return await GetCacheClient({
+    url: env.REDIS_URI ?? '',
+    mode: env.REDIS_MODE,
+  })
 }

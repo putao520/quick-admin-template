@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { type Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 
 const Popover = (theme: Theme) => {
   return {
@@ -7,11 +7,11 @@ const Popover = (theme: Theme) => {
       styleOverrides: {
         root: {
           '& .MuiPopover-paper': {
-            boxShadow: theme.shadows[6]
-          }
-        }
-      }
-    }
+            boxShadow: theme.shadows[6],
+          },
+        },
+      },
+    },
   }
 }
 

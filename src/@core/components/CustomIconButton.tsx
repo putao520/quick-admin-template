@@ -1,9 +1,10 @@
 // ** React Imports
-import { forwardRef } from 'react'
+
+import ButtonBase, { type ButtonBaseProps } from '@mui/material/ButtonBase'
 
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
-import ButtonBase, { type ButtonBaseProps } from '@mui/material/ButtonBase'
+import { forwardRef } from 'react'
 
 // 创建自定义的 IconButton 组件
 const IconButtonRoot = styled(ButtonBase)(({ theme }) => ({
@@ -15,11 +16,11 @@ const IconButtonRoot = styled(ButtonBase)(({ theme }) => ({
   textAlign: 'center',
   borderRadius: '50%',
   transition: theme.transitions.create('background-color', {
-    duration: theme.transitions.duration.shortest
+    duration: theme.transitions.duration.shortest,
   }),
   '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.04)'
-  }
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+  },
 }))
 
 export interface CustomIconButtonProps extends ButtonBaseProps {
@@ -42,7 +43,7 @@ const CustomIconButton = forwardRef<HTMLButtonElement, CustomIconButtonProps>((p
         ...(size === 'large' && { padding: 12 }),
         ...(edge === 'start' && { marginLeft: -8 }),
         ...(edge === 'end' && { marginRight: -8 }),
-        ...other.sx
+        ...other.sx,
       }}
     >
       {children}

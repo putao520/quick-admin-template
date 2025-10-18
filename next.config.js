@@ -1,18 +1,20 @@
-await import("./src/env.js");
+import path from 'node:path'
+
+await import('./src/env.js')
+const webpackModule = await import('next/dist/compiled/webpack/webpack.js')
+if (typeof webpackModule.init === 'function') {
+  webpackModule.init()
+}
+const webpack = webpackModule.default || webpackModule
+const { IgnorePlugin } = webpack.webpack
 
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
   staticPageGenerationTimeout: 6000,
-  /**
-   * If you have the "experimental: { appDir: true }" setting enabled, then you
-   * must comment the below `i18n` config out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
   i18n: {
-    locales: ["zh-cn"],
-    defaultLocale: "zh-cn",
+    locales: ['zh-cn'],
+    defaultLocale: 'zh-cn',
   },
   images: {
     loader: 'custom',
@@ -24,7 +26,18 @@ const config = {
       },
     ],
   },
-  // 确保 Pages Router 继续工作
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
-};
-export default config;
+  webpack: (webpackConfig) => {
+    webpackConfig.resolve = webpackConfig.resolve ?? {}
+    webpackConfig.resolve.alias = {
+      ...webpackConfig.resolve.alias,
+      '@mui/x-data-grid/esm/index.css': path.resolve('./styles/empty.css'),
+    }
+    webpackConfig.plugins = webpackConfig.plugins ?? []
+    webpackConfig.plugins.push(
+      new IgnorePlugin({ resourceRegExp: /@mui\/x-data-grid\/esm\/index\.css$/ }),
+    )
+    return webpackConfig
+  },
+}
+export default config

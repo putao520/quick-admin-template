@@ -1,14 +1,12 @@
 // ** React Imports
-import { createContext, useState, type ReactNode } from 'react'
 
 // ** MUI Imports
-import { type PaletteMode } from '@mui/material'
-
+import type { PaletteMode } from '@mui/material'
+import { createContext, type ReactNode, useState } from 'react'
+// ** Types Import
+import type { ContentWidth, ThemeColor } from 'src/@core/layouts/types'
 // ** ThemeConfig Import
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Types Import
-import { type ThemeColor, type ContentWidth } from 'src/@core/layouts/types'
 
 export type Settings = {
   mode: PaletteMode
@@ -24,13 +22,13 @@ export type SettingsContextValue = {
 const initialSettings: Settings = {
   themeColor: 'primary',
   mode: themeConfig.mode,
-  contentWidth: themeConfig.contentWidth
+  contentWidth: themeConfig.contentWidth,
 }
 
 // ** Create Context
 export const SettingsContext = createContext<SettingsContextValue>({
   saveSettings: () => null,
-  settings: initialSettings
+  settings: initialSettings,
 })
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
@@ -41,7 +39,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     setSettings(updatedSettings)
   }
 
-  return <SettingsContext.Provider value={{ settings, saveSettings }}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={{ settings, saveSettings }}>
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 export const SettingsConsumer = SettingsContext.Consumer

@@ -1,20 +1,20 @@
 // ** React Imports
-import React, { useMemo, useDeferredValue, memo } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
 import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import { memo, useDeferredValue, useMemo } from 'react'
 
 // ** Types Imports
-import { type ThemeColor } from 'src/@core/layouts/types'
+import type { ThemeColor } from 'src/@core/layouts/types'
 
 interface RowType {
   age: number
@@ -26,9 +26,12 @@ interface RowType {
   designation: string
 }
 
-type StatusObj = Record<string, {
+type StatusObj = Record<
+  string,
+  {
     color: ThemeColor
-  }>;
+  }
+>
 
 // 定义表格数据
 const tableData: RowType[] = [
@@ -39,7 +42,7 @@ const tableData: RowType[] = [
     name: 'Sally Quinn',
     salary: '$19586.23',
     email: 'eebsworth2m@sbwire.com',
-    designation: 'Human Resources Assistant'
+    designation: 'Human Resources Assistant',
   },
   {
     age: 61,
@@ -48,7 +51,7 @@ const tableData: RowType[] = [
     status: 'professional',
     name: 'Margaret Bowers',
     email: 'kocrevy0@thetimes.co.uk',
-    designation: 'Nuclear Power Engineer'
+    designation: 'Nuclear Power Engineer',
   },
   {
     age: 59,
@@ -57,7 +60,7 @@ const tableData: RowType[] = [
     status: 'rejected',
     salary: '$18991.67',
     email: 'ediehn6@163.com',
-    designation: 'Environmental Specialist'
+    designation: 'Environmental Specialist',
   },
   {
     age: 30,
@@ -66,7 +69,7 @@ const tableData: RowType[] = [
     salary: '$19252.12',
     name: 'Ralph Leonard',
     email: 'dfalloona@ifeng.com',
-    designation: 'Sales Representative'
+    designation: 'Sales Representative',
   },
   {
     age: 66,
@@ -75,7 +78,7 @@ const tableData: RowType[] = [
     salary: '$13076.28',
     name: 'Annie Martin',
     designation: 'Operator',
-    email: 'sganderton2@tuttocitta.it'
+    email: 'sganderton2@tuttocitta.it',
   },
   {
     age: 33,
@@ -84,7 +87,7 @@ const tableData: RowType[] = [
     name: 'Adeline Day',
     status: 'professional',
     email: 'hnisius4@gnu.org',
-    designation: 'Senior Cost Accountant'
+    designation: 'Senior Cost Accountant',
   },
   {
     age: 61,
@@ -93,7 +96,7 @@ const tableData: RowType[] = [
     salary: '$17803.80',
     name: 'Lora Jackson',
     designation: 'Geologist',
-    email: 'ghoneywood5@narod.ru'
+    email: 'ghoneywood5@narod.ru',
   },
   {
     age: 22,
@@ -102,8 +105,8 @@ const tableData: RowType[] = [
     name: 'Rodney Sharp',
     status: 'professional',
     designation: 'Cost Accountant',
-    email: 'dcrossman3@google.co.jp'
-  }
+    email: 'dcrossman3@google.co.jp',
+  },
 ]
 
 // 定义状态样式映射
@@ -112,49 +115,57 @@ const statusStyles: StatusObj = {
   rejected: { color: 'error' },
   current: { color: 'primary' },
   resigned: { color: 'warning' },
-  professional: { color: 'success' }
+  professional: { color: 'success' },
 }
 
 // 使用 memo 包装 TableRow 组件，避免不必要的重新渲染
-const TableRowMemo = memo(({ row }: { row: RowType }) => (
-  <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-    <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
-        <Typography variant='caption'>{row.designation}</Typography>
-      </Box>
-    </TableCell>
-    <TableCell>{row.email}</TableCell>
-    <TableCell>{row.date}</TableCell>
-    <TableCell>{row.salary}</TableCell>
-    <TableCell>{row.age}</TableCell>
-    <TableCell>
-      <Chip
-        label={row.status}
-        color={statusStyles[row.status].color}
-        sx={{
-          height: 24,
-          fontSize: '0.75rem',
-          textTransform: 'capitalize',
-          '& .MuiChip-label': { fontWeight: 500 }
-        }}
-      />
-    </TableCell>
-  </TableRow>
-));
+const TableRowMemo = memo(({ row }: { row: RowType }) => {
+  const chipConfig = statusStyles[row.status] ?? { color: 'default' as const }
+
+  return (
+    <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+      <TableCell sx={{ py: (theme) => `${theme.spacing(0.5)} !important` }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>
+            {row.name}
+          </Typography>
+          <Typography variant="caption">{row.designation}</Typography>
+        </Box>
+      </TableCell>
+      <TableCell>{row.email}</TableCell>
+      <TableCell>{row.date}</TableCell>
+      <TableCell>{row.salary}</TableCell>
+      <TableCell>{row.age}</TableCell>
+      <TableCell>
+        <Chip
+          label={row.status}
+          color={chipConfig.color}
+          sx={{
+            height: 24,
+            fontSize: '0.75rem',
+            textTransform: 'capitalize',
+            '& .MuiChip-label': { fontWeight: 500 },
+          }}
+        />
+      </TableCell>
+    </TableRow>
+  )
+})
+
+TableRowMemo.displayName = 'DashboardTableRow'
 
 // 使用 memo 包装主组件，避免不必要的重新渲染
 const DashboardTable = () => {
   // 使用 useMemo 缓存表格数据
-  const rows = useMemo(() => tableData, []);
-  
+  const rows = useMemo(() => tableData, [])
+
   // 使用 useDeferredValue 处理大型表格数据，避免界面卡顿
-  const deferredRows = useDeferredValue(rows);
-  
+  const deferredRows = useDeferredValue(rows)
+
   return (
     <Card>
       <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+        <Table sx={{ minWidth: 800 }} aria-label="table in dashboard">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -166,14 +177,14 @@ const DashboardTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {deferredRows?.map((row: RowType) => (
-              <TableRowMemo key={row.name} row={row} />
-            )) || null}
+            {deferredRows?.map((row: RowType) => <TableRowMemo key={row.name} row={row} />) || null}
           </TableBody>
         </Table>
       </TableContainer>
     </Card>
   )
 }
+
+DashboardTable.displayName = 'DashboardTable'
 
 export default memo(DashboardTable)

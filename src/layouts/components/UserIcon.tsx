@@ -1,29 +1,33 @@
 // ** React Imports
-import { type ReactNode } from 'react'
 
 // ** MUI Imports
-import { type SvgIconProps } from '@mui/material'
+import type { SvgIconProps } from '@mui/material'
+import { type ComponentType, createElement, isValidElement, type ReactNode } from 'react'
 
 interface UserIconProps {
   iconProps?: SvgIconProps
-  icon: string | ReactNode
+  icon: ComponentType<SvgIconProps> | ReactNode
 }
 
 const UserIcon = (props: UserIconProps) => {
   // ** Props
   const { icon, iconProps } = props
 
-  const IconTag = icon
+  if (isValidElement(icon)) {
+    return icon
+  }
 
-  let styles
+  if (typeof icon === 'function') {
+    const IconComponent = icon
 
-  /* styles = {
-    color: 'red',
-    fontSize: '2rem'
-  } */
+    return <IconComponent {...iconProps} />
+  }
 
-  // @ts-ignore
-  return <IconTag {...iconProps} style={{ ...styles }} />
+  if (icon && typeof icon === 'object' && '$$typeof' in icon) {
+    return createElement(icon as unknown as ComponentType<SvgIconProps>, iconProps)
+  }
+
+  return icon ?? null
 }
 
 export default UserIcon

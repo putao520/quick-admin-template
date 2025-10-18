@@ -1,15 +1,15 @@
 // ** MUI Theme Provider
+
+import type { ThemeOptions } from '@mui/material'
 import { deepmerge } from '@mui/utils'
-import { type ThemeOptions } from '@mui/material'
 
 // ** Type Import
-import { type Settings } from 'src/@core/context/settingsContext'
-
+import type { Settings } from 'src/@core/context/settingsContext'
+import breakpoints from './breakpoints'
 // ** Theme Override Imports
 import palette from './palette'
-import spacing from './spacing'
 import shadows from './shadows'
-import breakpoints from './breakpoints'
+import spacing from './spacing'
 
 const themeOptions = (settings: Settings): ThemeOptions => {
   // ** Vars
@@ -30,28 +30,28 @@ const themeOptions = (settings: Settings): ThemeOptions => {
         'sans-serif',
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"'
-      ].join(',')
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
     shadows: shadows(mode),
     ...spacing,
     breakpoints: breakpoints(),
     shape: {
-      borderRadius: 6
+      borderRadius: 6,
     },
     mixins: {
       toolbar: {
-        minHeight: 64
-      }
-    }
+        minHeight: 64,
+      },
+    },
   }
 
   return deepmerge(themeConfig, {
     palette: {
       primary: {
-        ...themeConfig.palette[themeColor]
-      }
-    }
+        ...themeConfig.palette[themeColor],
+      },
+    },
   })
 }
 
